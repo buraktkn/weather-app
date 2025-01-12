@@ -1,7 +1,7 @@
 import './index.css';
 import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faMoon, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
 
@@ -73,6 +73,39 @@ function App() {
     document.body.className=theme; //Tema değiştiğinde body'ye uygulanıyor
   }, [theme]);
 
+  const getCurrentLocationWeather = () => {
+    if (navigator.geolocation) {
+      alert('Geolocation desteklenmiyor');
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const {latitude, longitude} = position.coords;
+        try{
+          setError(null);
+          setLoading(true);
+          const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&appid=${API_KEY}`);
+          if (!response.ok) {
+            throw new Error('Konum bilgisi alınamadı');
+          }
+          const data = await response.json();
+          setWeather(data);
+        }
+        catch (error) {
+          setWeather(null);
+          setError(error.message);
+        }
+        finally {
+          setLoading(false);
+        }
+      },
+      (error) => {
+        alert('Konum bilgisi alınamadı');
+        console.error(error);
+      }
+    )
+  }
+
   return (
     <div className={`App ${theme}`}>
       <div className="theme-toggle" onClick={toggleTheme} style={{cursor: 'pointer', fontSize: '24px'}}>
@@ -83,6 +116,7 @@ function App() {
         <input type="text" placeholder="Şehir adını giriniz" value={city} onChange={handleInputChange} 
         //Enter tuşuna basıldığında da arama yapılıyor
         onKeyDown={(e)=>e.key === 'Enter' && handleSearch()} />
+        <FontAwesomeIcon icon={faLocationDot} onClick={getCurrentLocationWeather} style={{cursor: 'pointer', fontSize: '24px'}} />
         <button onClick={handleSearch}>Arama</button>
       </div>
       <div className="weather-result">
@@ -93,6 +127,9 @@ function App() {
             <h3>{weather.name}</h3>
             <p>Sıcaklık: {Math.round(weather.main.temp)}°C</p>
             <p>Hava Durumu: {weatherDescription[weather.weather[0].description]}</p>
+            <p>Hissedilen Sıcaklık: {Math.round(weather.main.feels_like)}°C</p>
+            <p>Gün Doğumu : {new Date(weather.sys.sunrise * 1000).toLocaleTimeString()}</p>
+            <p>Gün Batımı : {new Date(weather.sys.sunset * 1000).toLocaleTimeString()}</p>
           </div>
         )}
       </div>
