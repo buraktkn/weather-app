@@ -18,6 +18,7 @@ function App() {
   const [city, setCity] = useState(''); // Şehir bilgisi
   const [weather, setWeather] = useState(null); // API'den gelen Hava durumu bilgisi
   const [error, setError] = useState(null); // Hata bilgisi
+  const [loading, setLoading] = useState(false); // Yükleniyor bilgisi
 
   const API_KEY = '6b6a52a22d0c882171356d8706b1abd6'; // OpenWeather API key
 
@@ -28,6 +29,7 @@ function App() {
     }
     try {
       setError(null);
+      setLoading(true);
       const response = await
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`);
       if (!response.ok) {
@@ -39,6 +41,9 @@ function App() {
     catch (error) {
       setWeather(null);
       setError(error.message);
+    }
+    finally {
+      setLoading(false);
     }
   }
   const handleInputChange = (e) => {
@@ -57,6 +62,7 @@ function App() {
         <button onClick={handleSearch}>Arama</button>
       </div>
       <div className="weather-result">
+        {loading && <p>Yükleniyor...</p>}
         {error && <p style={{ color: 'red' }}>{error}</p>}
         {weather && (
           <div>
