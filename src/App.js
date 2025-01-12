@@ -1,5 +1,8 @@
 import './index.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+
 function App() {
 
 
@@ -14,7 +17,7 @@ function App() {
     "snow": "Karlı",
     "mist": "Sisli"
   }
-
+  const [theme, setTheme] = useState('light');//Varsayılan Tema 'Light'
   const [city, setCity] = useState(''); // Şehir bilgisi
   const [weather, setWeather] = useState(null); // API'den gelen Hava durumu bilgisi
   const [error, setError] = useState(null); // Hata bilgisi
@@ -53,9 +56,28 @@ function App() {
   const handleSearch = () => {
     fetchWeather(); // Hava durumu bilgisi API'den çekiliyor
   };
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);//Yeni tema localStorage'de saklanıyor
+  }
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.body.className=theme; //Tema değiştiğinde body'ye uygulanıyor
+  }, [theme]);
 
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
+      <div className="theme-toggle" onClick={toggleTheme} style={{cursor: 'pointer', fontSize: '24px'}}>
+        {theme === 'light' ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
+      </div>
       <h1>Weather App</h1>
       <div className="input-container">
         <input type="text" placeholder="Şehir adını giriniz" value={city} onChange={handleInputChange} />

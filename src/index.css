@@ -39,3 +39,23 @@ button:hover {
   font-size: 18px;
 }
 
+.light{
+  background-color: #f0f8ff;
+  color: #000;
+}
+
+.dark{
+  background-color: #333;
+  color: #fff;
+}
+
+.theme-toggle{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.theme-toggle:hover{
+  color: #007bff;
+}
