@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  background-color: #f0f8ff;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Times New Roman', Times, serif, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
