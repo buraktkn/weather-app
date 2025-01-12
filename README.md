@@ -2,7 +2,8 @@
 
 Bu proje, React ve OpenWeather API kullanılarak geliştirilmiş bir hava durumu uygulamasıdır. Kullanıcılar şehir adı girerek hava durumunu öğrenebilir ve ek detayları görüntüleyebilir.
 
-![Weather App Görseli](https://via.placeholder.com/800x400?text=Weather+App+Ekran+Görseli)
+![Weather App Light Theme](./public/screen/light.png)
+![Weather App Dark Theme](./public/screen/dark.png)
 
 ---
 
