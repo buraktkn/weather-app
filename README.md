@@ -5,6 +5,11 @@ Bu proje, React ve OpenWeather API kullanılarak geliştirilmiş bir hava durumu
 ![Weather App Light Theme](./public/screen/light.png)
 ![Weather App Dark Theme](./public/screen/dark.png)
 
+<div style="display: flex; justify-content: center; gap: 20px;">
+  <img src="./public/screen/light.png" alt="Light Theme" width="400"/>
+  <img src="./public/screen/dark.png" alt="Dark Theme" width="400"/>
+</div>
+
 ---
 
 ## **Özellikler**
