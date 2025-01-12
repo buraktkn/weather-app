@@ -80,7 +80,9 @@ function App() {
       </div>
       <h1>Weather App</h1>
       <div className="input-container">
-        <input type="text" placeholder="Şehir adını giriniz" value={city} onChange={handleInputChange} />
+        <input type="text" placeholder="Şehir adını giriniz" value={city} onChange={handleInputChange} 
+        //Enter tuşuna basıldığında da arama yapılıyor
+        onKeyDown={(e)=>e.key === 'Enter' && handleSearch()} />
         <button onClick={handleSearch}>Arama</button>
       </div>
       <div className="weather-result">
